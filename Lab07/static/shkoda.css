@@ -1,0 +1,27 @@
+body {
+    background: rgba(201, 129, 224, 0.8);
+  
+}
+
+h1 {
+    color: aliceblue;
+    text-align: center;
+}
+
+label {
+    font-size: 40px;
+    font-family: "Comic Sans MS", serif;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.text {
+    color:rgba(255, 255, 255, 0.8);
+    text-decoration: underline;
+    font-family: "Comic Sans MS", serif;
+    font-size: larger;
+}
+
+.line_block {
+    float: left;
+    margin: 2%;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <students>
+        <student>
+            <name>Kristina</name>
+            <surname>Shkoda</surname>
+            <course>3</course>
+        </student>
+        <student>
+             <name>Vladislaw</name>
+            <surname>Belitski</surname>
+            <course>3</course>
+        </student>
+    </students>
+</root>
