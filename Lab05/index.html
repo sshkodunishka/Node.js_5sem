@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <button onclick="return Get()">Получить данные</button>
+      <fieldset>
+        <legend>Добавить</legend>
+        <form>
+          <label for="Name">Name: </label>
+          <input type="text" id="Name" />
+          <label for="Bday">Dday: </label>
+          <input type="text" id="Bday" />
+          <button onclick="return Post()">Add field</button>
+        </form>
+      </fieldset>
+      <fieldset>
+        <legend>Изменение</legend>
+        <form>
+          <label for="uId">ID:</label>
+          <input type="number" id="uId" /><br />
+          <button onclick="return GetById()">Изменить</button>
+          <label for="uName">Имя:</label>
+          <input type="text" id="uName" /><br />
+          <label for="uBday">Дата рождения:</label>
+          <input type="text" id="uBday" /><br />
+          <button onclick="return Put()">Изменить данные</button>
+        </form>
+      </fieldset>
+      <fieldset>
+        <legend>Удаление</legend>
+        <form>
+          <label for="dId">ID:</label>
+          <input type="number" id="dId" /><br />
+          <button onclick="return Delete()">Удалить данные</button>
+        </form>
+      </fieldset>
+    </main>
+    <div id="test"></div>
+  </body>
+  <script>
+    var ids = 3;
+    function Get() {
+      fetch("http://localhost:5000/api/db", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((pdata) => {
+          console.log("pdata", pdata);
+          let get = document.getElementById("test");
+          get.innerHTML = "";
+          pdata.forEach((element) => {
+            get.innerHTML +=
+              element.id + ".  " + element.name + " " + element.bday + "<br/>";
+          });
+        });
+      return false;
+    }
+
+    function Post() { 
+      ids++; 
+      let Name = document.getElementById("Name"); 
+      let BDay = document.getElementById("Bday"); 
+      let test = document.getElementById("test"); 
+      let dateBDay; 
+      if (!Name.value || !Bday.value) { 
+        test.innerHTML = "error"; 
+        return false; 
+      } 
+      try { 
+        dateBDay = new Date(BDay.value); 
+        if (!dateBDay) { 
+          test.innerHTML = "Invalid Date"; 
+          return false; 
+        } 
+        const today = Date.now(); 
+        const tomorrow = new Date(today); 
+        tomorrow.setDate(tomorrow.getDate() + 1); 
+        if (dateBDay > tomorrow) { 
+          test.innerHTML = "date > tommorow"; 
+          return false; 
+        } 
+      } catch (e) { 
+        test.innerHTML = "Invalid Date"; 
+        return false; 
+      } 
+      fetch(`http://localhost:5000/api/db`, { 
+        method: "POST", 
+        headers: { "Content-Type": "application/json" }, 
+        body: JSON.stringify({ 
+          id: ids, 
+          name: Name.value, 
+          bday: dateBDay.toISOString().slice(0, 10), 
+        }), 
+      }) 
+        .then((response) => { 
+          return response.json(); 
+        }) 
+        .then((pdata) => { 
+          console.log("POST ", pdata); 
+          test.append("yay"); 
+        }); 
+      return false; 
+    }
+    function Put() { 
+      let Name = document.getElementById("uName"); 
+      let Id = document.getElementById("uId"); 
+      let BDay = document.getElementById("uBday"); 
+      let test = document.getElementById("test"); 
+      let dateBDay; 
+      try { 
+        dateBDay = new Date(BDay.value); 
+        if (!dateBDay) { 
+          test.innerHTML = "Invalid Date"; 
+          return false; 
+        } 
+        const today = Date.now(); 
+        const tomorrow = new Date(today); 
+        tomorrow.setDate(tomorrow.getDate() + 1); 
+        if (dateBDay > tomorrow) { 
+          test.innerHTML = "date > tommorow"; 
+          return false; 
+        } 
+      } catch (e) { 
+        test.innerHTML = "Invalid Date"; 
+        return false; 
+      } 
+      if (Name.value && dateBDay && Id.value) { 
+        fetch(`http://localhost:5000/api/db`, { 
+          method: "PUT", 
+          headers: { "Content-Type": "application/json" }, 
+          body: JSON.stringify({ 
+            id: +Id.value, 
+            name: Name.value, 
+            bday: BDay.value, 
+          }), 
+        }) 
+          .then((response) => { 
+            return response.json(); 
+          }) 
+          .then((pdata) => { 
+            console.log("PUT.pdata", pdata); 
+          }); 
+      } else { 
+        let get = document.getElementById("test"); 
+        get.innerHTML = "error"; 
+      } 
+      return false; 
+    }
+    function Delete() {
+      let Id = document.getElementById("dId");
+
+      if (Id.value) {
+        fetch(`http://localhost:5000/api/db?id=${Id.value}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((pdata) => {
+            console.log("DELETE.pdata", pdata);
+          });
+      } else {
+        let get = document.getElementById("test");
+        get.innerHTML = "error";
+      }
+      return false;
+    }
+    function GetById() {
+      let Id = document.getElementById("uId");
+
+      if (Id.value) {
+        fetch(`http://localhost:5000/api/db?id=${Id.value}`, {
+          method: "GET",
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((pdata) => {
+            console.log(pdata)
+            let Name = document.getElementById("uName"); 
+            let BDay = document.getElementById("uBday")
+            Name.value = pdata?.name ?? '';
+            BDay.value = pdata?.bday ?? '';
+          });
+      } else {
+        let get = document.getElementById("test");
+        get.innerHTML = "error";
+      }
+      return false;
+    }
+  </script>
+</html>

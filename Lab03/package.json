@@ -1,0 +1,11 @@
+{
+  "name": "lab03",
+  "version": "1.0.0",
+  "description": "lan03 Node.js",
+  "main": "03-01.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

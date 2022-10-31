@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <div>
+            <label for="sender">Sender:</label>
+            <input type="email" id="sender" placeholder="Sender's mail">
+        </div>
+        <div>
+            <label for="recipient">Recipient:</label>
+            <input type="email" id="recipient" placeholder="Recipient's mail">
+        </div>
+        <div>
+            <label for="message">Message:</label>
+            <textarea id="message"></textarea>
+        </div>
+        <button onclick="Send()">Send</button>
+    </form>
+
+    <script>
+        function Send() {
+
+            const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (!sender.value.match(mailformat)) {
+                return;
+            }
+            fetch('http://localhost:5000/', {
+                method: 'POST', mode: "no-cors",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'text/html'
+                },
+                body: JSON.stringify({
+                    sender: sender.value,
+                    // recipient: recipient.value,
+                    // message: message.value
+                })
+            }).then(response => response.text())
+                .then(pdata => alert(pdata));
+        }
+    </script>
+</body>
+
+</html>

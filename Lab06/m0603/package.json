@@ -1,0 +1,15 @@
+{
+  "name": "shkodunishka",
+  "version": "1.0.0",
+  "description": "my awesome package for loved Nistyuk",
+  "main": "m0603.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kristina Shkoda",
+  "license": "ISC",
+  "dependencies": {
+    "nodemailer": "^6.8.0",
+    "nodemailer-smtp-transport": "^2.7.4"
+  }
+}
