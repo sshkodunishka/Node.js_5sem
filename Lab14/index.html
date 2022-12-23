@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="Get()">GET</button>
+    <button onclick="Post()">POST</button>
+    <button onclick="Put()">PUT</button>
+    <button onclick="Delete()">DELETE</button>
+    <br />
+    <div>
+        <div>
+          <label>pulpit: </label>
+          <input type="text" id="PULPIT" />
+        </div>
+        <div>
+          <label>pulpitName: </label>
+          <input type="text" id="PULPIT_NAME" />
+        </div>
+        <div>
+          <label>faculty: </label>
+          <input type="text" id="FACULTY" />
+        </div>
+        <br />
+    <div id="result" content=""></div>
+    <script>
+        async function Get() {
+            fetch("http://localhost:3000/api/pulpits", {
+                method: "GET",
+                headers: { Accept: "application/json" },
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((pdata) => {
+                    console.log("pdata", pdata);
+                    let result = document.getElementById("result");
+                    result.innerHTML = "";
+                    pdata.forEach((element) => {
+                        result.innerHTML +=
+                            "<div>" +
+                            "<p>" +
+                            " pulpit: " +
+                            element.PULPIT +
+                            " pulpitName: " +
+                            element.PULPIT_NAME +
+                            " faculty: " +
+                            element.FACULTY +
+                            "</p>" +
+                            `</div>`;
+                    });
+                });
+        }
+        function Post() {
+            let PULPIT = document.getElementById("PULPIT");
+            let PULPIT_NAME = document.getElementById("PULPIT_NAME");
+            let FACULTY = document.getElementById("FACULTY");
+            fetch("http://localhost:3000/api/pulpits", {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    pulpit: PULPIT.value,
+                    pulpit_name: PULPIT_NAME.value,
+                    faculty: FACULTY.value,
+                }),
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((pdate) => {
+                    if (pdate.error) {
+                        document.write(pdate.error);
+                    }
+                    console.log("POST.pdata", pdate);
+                });
+        }
+
+        function Delete() {
+            let PULPIT = document.getElementById("PULPIT");
+            fetch(`http://localhost:3000/api/pulpits/${PULPIT.value}`, {
+                method: "DELETE",
+                headers: {
+                    "Access-Control-Request-Method": "DELETE",
+                },
+            });
+        }
+
+        function Put() {
+            let PULPIT = document.getElementById("PULPIT");
+            let PULPIT_NAME = document.getElementById("PULPIT_NAME");
+            let FACULTY = document.getElementById("FACULTY");
+            fetch("http://localhost:3000/api/pulpits", {
+                method: "PUT",
+                headers: {
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    pulpit: PULPIT.value,
+                    pulpit_name: PULPIT_NAME.value,
+                    faculty: FACULTY.value,
+                }),
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((pdate) => {
+                    if (pdate.error) {
+                        document.write(pdate.error);
+                    }
+                    console.log("PUT.pdata", pdate);
+                });
+        }
+    </script>
+</body>
+
+</html>

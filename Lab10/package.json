@@ -1,0 +1,15 @@
+{
+  "name": "lab10",
+  "version": "1.0.0",
+  "description": "WebSocket",
+  "main": "10-01.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "event": "^1.0.0",
+    "ws": "^8.11.0"
+  }
+}

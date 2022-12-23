@@ -1,0 +1,17 @@
+{
+  "name": "lab08",
+  "version": "1.0.0",
+  "description": "lab08",
+  "main": "08-00.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "formidable": "^2.0.1",
+    "http": "^0.0.1-security",
+    "nodemon": "^2.0.20",
+    "xml2js": "^0.4.23"
+  }
+}

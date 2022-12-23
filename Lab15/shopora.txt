@@ -1,0 +1,13 @@
+cmd with admin access 
+
+----
+1) cd C:\Program Files\MongoDB\Server\6.0\bin
+2) mongod.exe --port 27017 --dbpath "C:\Program Files\MongoDB\Server\6.0\data" --replSet rs0 
+----
+1) cd C:\Program Files\MongoDB\Server\6.0\bin
+2) mongod.exe --port 27018 --dbpath "C:\Program Files\MongoDB\Server\6.0\data1" --replSet rs0
+----
+1) cd C:\Program Files\MongoDB\Server\6.0\bin
+2) mongosh 
+3) rs.initiate()
+4) rs.add("localhost:27018")
