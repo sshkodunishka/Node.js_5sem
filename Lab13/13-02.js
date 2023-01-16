@@ -13,10 +13,3 @@ client.on('data', (data) => {
     console.log(data.toString());
     client.destroy();
 });
-
-client.on('close', () => {
-    console.log('Client close');
-});
-client.on('error', (e) => {
-    console.log('Client error')
-})
